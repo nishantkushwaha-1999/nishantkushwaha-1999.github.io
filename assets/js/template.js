@@ -36,3 +36,47 @@ jQuery(document).ready(function($) {
 	});
 
 });
+
+// JavaScript for study plan checkbox functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const studyPlanTable = document.querySelector('table'); // Assuming there's only one table on study_plan.html or it's the main one
+
+    // Only run this script if we are on the study plan page and the table exists
+    // A more specific selector for the table might be needed if there are other tables.
+    // For now, we can check if the page title is "Study Plan" as a heuristic.
+    if (document.title === "Study Plan" && studyPlanTable) {
+        const checkboxes = document.querySelectorAll('.task-checkbox');
+
+        // Load saved states from localStorage
+        checkboxes.forEach(function(checkbox) {
+            const row = checkbox.closest('tr.task-row');
+            if (!row) return; // Should not happen with current HTML structure
+
+            // Create a unique key for each checkbox based on its position or some unique data if available
+            // For simplicity, using week number if available, otherwise index
+            const weekCell = row.querySelector('td:nth-child(2)'); // Assuming week is the second cell
+            let key = 'taskState_';
+            if (weekCell) {
+                key += 'week' + weekCell.textContent.trim();
+            } else {
+                // Fallback to index if week number isn't easily found (should be improved for robustness)
+                key += Array.from(checkboxes).indexOf(checkbox);
+            }
+
+            if (localStorage.getItem(key) === 'true') {
+                checkbox.checked = true;
+                row.classList.add('completed');
+            }
+
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    row.classList.add('completed');
+                    localStorage.setItem(key, 'true');
+                } else {
+                    row.classList.remove('completed');
+                    localStorage.setItem(key, 'false');
+                }
+            });
+        });
+    }
+});

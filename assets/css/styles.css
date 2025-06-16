@@ -815,3 +815,13 @@ footer.entry-meta .meta-in {
 .dev-item {
   font-size: 50px;
 }
+/* Styling for completed task rows in the study plan */
+tr.task-row.completed td {
+    background-color: #d3ffd3; /* A light green background */
+    text-decoration: line-through; /* Strikethrough text */
+}
+
+/* Optional: Style the checkbox itself when the row is completed, if desired */
+/* tr.task-row.completed .task-checkbox { */
+    /* Add custom styling for the checkbox if needed */
+/* } */
